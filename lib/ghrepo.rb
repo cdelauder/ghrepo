@@ -79,10 +79,10 @@ module Ghrepo
     # FileUtils.cp (ghrepo_lib_dir + "html5-boilerplate.html"), app_dir
 
     Dir.chdir(app_dir)
-    `cp #{html5_file} ./`
+    `cp #{html5_file} ./index.html`
 
-    `git init`
-    `git remote add origin "#{git_url}"`
+    # `git init`
+    # `git remote add origin "#{git_url}"`
     `git add .`
     `git commit -m "boilerplate html"`
     `git push -u origin master`
