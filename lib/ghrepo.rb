@@ -3,6 +3,7 @@
 require "ghrepo/version"
 require "json"
 require "io/console"
+require "pry"
 
 module Ghrepo
 
@@ -17,6 +18,7 @@ module Ghrepo
 
       args.include?('-rails') ? include_rails(args, repo_name, git_url) : `git clone "#{git_url}"`
       add_html(repo_name, git_url) if args.include?('-html')
+      find_collabs(args, credentials, repo_name) if args.include?('-c')
 
     else
       puts "RTFM dummy!"
@@ -99,5 +101,16 @@ module Ghrepo
     `git add .`
     `git commit -m "boilerplate rails"`
     `git push -u origin master`
+  end
+
+  def find_collabs(args, credentials, repo_name)
+    starts_with_c = args.drop_while {|arg| arg.start_with?('-c')}
+    collabs_list = starts_with_c.reject {|flags| flags.start_with?('-')}
+    collabs_list.each {|collab| add_collaborator(collab, credentials, repo_name)}
+  end
+
+  def add_collaborator(collab, credentials, repo_name)
+    `curl -i -u "#{credentials[:username]}:#{credentials[:password]}" -X PUT -d '' https://api.github.com/repos/"#{credentials[:username]}"/"#{repo_name}"/collaborators/"#{collab}"`
+    puts "succesfully added collaborator ", collab
   end
 end
