@@ -15,14 +15,8 @@ module Ghrepo
       response = `curl -u "#{credentials[:username]}:#{credentials[:password]}" https://api.github.com/user/repos -d '{"name":"'#{repo_name}'"}'`
       git_url = JSON.parse(response)[credentials[:url]]
 
-      if args.include?('-rails')
-        include_rails(args, repo_name, git_url)
-        if args.include?('-html')
-          add_html(repo_name)
-        end
-      else
-        `git clone "#{git_url}"`
-      end
+      args.include?('-rails') ? include_rails(args, repo_name, git_url) : `git clone "#{git_url}"`
+      add_html(repo_name, git_url) if args.include?('-html')
 
     else
       puts "RTFM dummy!"
@@ -57,7 +51,7 @@ module Ghrepo
   end
 
   def set_url(args)
-    args.include?('-ssl') ? 'ssh_url' : 'clone_url'
+    args.include?('-ssh') ? 'ssh_url' : 'clone_url'
   end
 
   def set_username
@@ -77,11 +71,21 @@ module Ghrepo
     {url: set_url(args), username: set_username, password: set_password}
   end
 
-  def add_html(repo_name)
-    rails_dir = "./#{repo_name}/app/views"
+  def add_html(repo_name, git_url)
+    app_dir = "./#{repo_name}"
     latest_ghrepo_gem = (Dir.entries(ENV["GEM_HOME"] + "/gems")).select {|l| l.start_with?('ghrep')}.last
-    ghrepo_lib_dir = ENV["GEM_HOME"] += "/gems/" + latest_ghrepo_gem + "/lib/"
-    FileUtils.cp (ghrepo_lib_dir + "html5-boilerplate.html"), rails_dir
+    html5_file = ENV["GEM_HOME"] += "/gems/" + latest_ghrepo_gem + "/lib/html5-boilerplate.html"
+
+    # FileUtils.cp (ghrepo_lib_dir + "html5-boilerplate.html"), app_dir
+
+    Dir.chdir(app_dir)
+    `cp #{html5_file} ./`
+
+    `git init`
+    `git remote add origin "#{git_url}"`
+    `git add .`
+    `git commit -m "boilerplate html"`
+    `git push -u origin master`
   end
 
   def include_rails(args, repo_name, git_url)
