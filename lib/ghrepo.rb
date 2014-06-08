@@ -3,7 +3,6 @@
 require "ghrepo/version"
 require "json"
 require "io/console"
-require "pry"
 
 module Ghrepo
 
