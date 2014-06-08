@@ -3,6 +3,7 @@
 If you don't want to have to enter your GitHub username and password (or API token) everytime you create a GitHub repo with this gem, set the following environment variables on your system.
 
 GHREPO_KEY=PERSONAL_GITHUB_API_TOKEN
+
 GHREPO_USERNAME=YOUR_GITHUB_USERNAME
 
 You can create a personal GitHub API token here:
