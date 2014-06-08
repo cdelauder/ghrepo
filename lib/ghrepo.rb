@@ -49,7 +49,7 @@ module Ghrepo
   end
 
   def set_url(args)
-    args.include?('-ssl') ? 'ssh_url' : 'clone_url'
+    args.include?('-ssh') ? 'ssh_url' : 'clone_url'
   end
 
   def set_username
