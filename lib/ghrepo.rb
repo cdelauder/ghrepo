@@ -15,7 +15,15 @@ module Ghrepo
       response = `curl -u "#{credentials[:username]}:#{credentials[:password]}" https://api.github.com/user/repos -d '{"name":"'#{repo_name}'"}'`
       git_url = JSON.parse(response)[credentials[:url]]
 
-      args.include?('-rails') ? include_rails(args, repo_name, git_url) : `git clone "#{git_url}"`
+      if args.include?('-rails')
+        include_rails(args, repo_name, git_url)
+        if args.include?('-html')
+          add_html(repo_name)
+        end
+      else
+        `git clone "#{git_url}"`
+      end
+
     else
       puts "RTFM dummy!"
       puts <<-eos
