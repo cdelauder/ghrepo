@@ -1,24 +1,34 @@
 # Ghrepo
 
-TODO: Write a gem description
+If you don't want to have to enter your GitHub username and password (or API token) everytime you create a GitHub repo with this gem, set the following environment variables on your system.
+
+GHREPO_KEY=PERSONAL_GITHUB_API_TOKEN
+GHREPO_USERNAME=YOUR_GITHUB_USERNAME
+
+You can create a personal GitHub API token here:
+<img src="http://monosnap.com/image/5k6tgEW16fB9cajNn43q6s3Q8gJnZM">
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'ghrepo'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
 
     $ gem install ghrepo
 
 ## Usage
 
-TODO: Write usage instructions here
+1. Create an empty repo on GitHub and clone that directory into the directory that you are currently in
+
+    $ ghruby soverywow
+
+2. Create an empty repo on GitHub and clone that directory using the SSH address
+
+    $ ghruby -ssh soverywow
+
+3. Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created
+
+    $ ghruby -rails soverywow
+
+4. Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created using SSH
+
+    $ ghruby -rails -ssh soverywow
 
 ## Contributing
 
