@@ -81,7 +81,7 @@ module Ghrepo
     rails_dir = "./#{repo_name}/app/views"
     latest_ghrepo_gem = (Dir.entries(ENV["GEM_HOME"] + "/gems")).select {|l| l.start_with?('ghrep')}.last
     ghrepo_lib_dir = ENV["GEM_HOME"] += "/gems/" + latest_ghrepo_gem + "/lib/"
-    FileUtils.cp (ghrepo_lib_dir + "ghrepo.rb"), rails_dir
+    FileUtils.cp (ghrepo_lib_dir + "html5-boilerplate.html"), rails_dir
   end
 
   def include_rails(args, repo_name, git_url)
