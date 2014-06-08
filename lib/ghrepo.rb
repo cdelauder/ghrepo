@@ -51,7 +51,7 @@ module Ghrepo
   end
 
   def set_url(args)
-    args.include?('-ssh') ? 'ssh_url' : 'clone_url'
+    ENV['GHREPO_SSH'] || args.include?('-ssh') ? 'ssh_url' : 'clone_url'
   end
 
   def set_username
