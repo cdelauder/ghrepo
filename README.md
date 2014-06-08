@@ -25,43 +25,43 @@ You can create a personal GitHub API token here:
 Create an empty repo on GitHub and clone that directory into the directory that you are currently in
 
 ```
-$ ghrepo soverywow
+$ ghrepo THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
 Create an empty repo on GitHub and clone that directory using the SSH address
 
 ```
-$ ghrepo -ssh soverywow
+$ ghrepo -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
 Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created
 
 ```
-$ ghrepo -rails soverywow
+$ ghrepo -rails THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
 Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created using SSH
 
 ```
-$ ghrepo -rails -ssh soverywow
+$ ghrepo -rails -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
 Create an empty repo on GitHub, build a boilerplate HTML5 index.html file and push it to the GitHub repository that was just created
 
 ```
-$ ghrepo -html soverywow
+$ ghrepo -html THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
 Create an empty repo on GitHub, build a boilerplate HTML5 index.html and push it to the GitHub repository that was just created using SSH
 
 ```
-$ ghrepo -html -ssh soverywow
+$ ghrepo -html -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
 Add collaborators
 
 ```
-$ ghrepo -c COLLABORATOR_USERNAME soverywow
+$ ghrepo -c COLLABORATOR_USERNAME THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
 ## Contributing
