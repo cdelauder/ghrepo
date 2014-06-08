@@ -58,6 +58,12 @@ Create an empty repo on GitHub, build a boilerplate HTML5 index.html and push it
 $ ghrepo -html -ssh soverywow
 ```
 
+Add collaborators
+
+```
+$ ghrepo -c COLLABORATOR_USERNAME soverywow
+```
+
 ## Contributing
 
 1. Fork it
