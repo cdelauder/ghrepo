@@ -16,19 +16,27 @@ You can create a personal GitHub API token here:
 
 1. Create an empty repo on GitHub and clone that directory into the directory that you are currently in
 
-    $ ghruby soverywow
+```
+$ ghruby soverywow
+```
 
 2. Create an empty repo on GitHub and clone that directory using the SSH address
 
-    $ ghruby -ssh soverywow
+```
+$ ghruby -ssh soverywow
+```
 
 3. Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created
 
-    $ ghruby -rails soverywow
+```
+$ ghruby -rails soverywow
+```
 
 4. Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created using SSH
 
-    $ ghruby -rails -ssh soverywow
+```
+$ ghruby -rails -ssh soverywow
+```
 
 ## Contributing
 
