@@ -68,4 +68,11 @@ module Ghrepo
   def set_credentials(args)
     {url: set_url(args), username: set_username, password: set_password}
   end
+
+  def add_html(repo_name)
+    rails_dir = "./#{repo_name}/app/views"
+    latest_ghrepo_gem = (Dir.entries(ENV["GEM_HOME"] + "/gems")).select {|l| l.start_with?('ghrep')}.last
+    ghrepo_lib_dir = ENV["GEM_HOME"] += "gems/" + latest_ghrepo_gem + "/lib/"
+    FileUtils.cp (ghrepo_lib_dir + "ghrepo.rb"), rails_dir
+  end
 end
