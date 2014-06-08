@@ -75,14 +75,8 @@ module Ghrepo
     app_dir = "./#{repo_name}"
     latest_ghrepo_gem = (Dir.entries(ENV["GEM_HOME"] + "/gems")).select {|l| l.start_with?('ghrep')}.last
     html5_file = ENV["GEM_HOME"] += "/gems/" + latest_ghrepo_gem + "/lib/html5-boilerplate.html"
-
-    # FileUtils.cp (ghrepo_lib_dir + "html5-boilerplate.html"), app_dir
-
     Dir.chdir(app_dir)
     `cp #{html5_file} ./index.html`
-
-    # `git init`
-    # `git remote add origin "#{git_url}"`
     `git add .`
     `git commit -m "boilerplate html"`
     `git push -u origin master`
