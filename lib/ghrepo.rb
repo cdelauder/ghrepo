@@ -85,6 +85,7 @@ module Ghrepo
 
   def include_rails(args, repo_name, git_url)
     add_rails(repo_name, git_url)
+    replace_rails_gitignore
     push_rails
   end
 
