@@ -96,6 +96,12 @@ module Ghrepo
     `git remote add origin "#{git_url}"`
   end
 
+  def replace_rails_gitignore
+    latest_ghrepo_gem = (Dir.entries(ENV["GEM_HOME"] + "/gems")).select {|l| l.start_with?('ghrep')}.last
+    gitignore_file = ENV["GEM_HOME"] += "/gems/" + latest_ghrepo_gem + "/lib/Rails.gitignore"
+    `cp #{gitignore_file} .gitignore`
+  end
+
   def push_rails
     `git add .`
     `git commit -m "boilerplate rails"`
