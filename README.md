@@ -1,4 +1,6 @@
-# Ghrepo
+# ghrepo
+
+This is a Ruby gem that you can use to create GitHub repos from the command line. It currently supports creating an empty repo, a repo with a boilerplate HTML5 file or a repo with a boilerplate Rails application. You can also add collaborators when creating the repo.
 
 If you don't want to have to enter your GitHub username and password (or API token) everytime you create a GitHub repo with this gem, set the following environment variables on your system.
 
