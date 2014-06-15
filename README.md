@@ -60,10 +60,10 @@ Create an empty repo on GitHub, build a boilerplate HTML5 index.html and push it
 $ ghrepo -html -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
-Add collaborators
+Add collaborators. If adding more than more than one collaborator, separate each name with a space.
 
 ```
-$ ghrepo -c COLLABORATOR_USERNAME THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -c COLLAB_USERNAME COLLAB_USERNAME2 THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
 ## Contributing
