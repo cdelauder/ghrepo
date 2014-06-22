@@ -12,8 +12,7 @@ module Ghrepo
     if args.any?
       repo_name = args.pop
       credentials = set_credentials(args)
-      response = `curl -u "#{credentials[:username]}:#{credentials[:password]}" https://api.github.com/user/repos -d '{"name":"'#{repo_name}'"}'`
-      git_url = JSON.parse(response)[credentials[:url]]
+      args.include?('-s') ? make_search(repo_name) : create_repo(credentials, repo_name)
 
       args.include?('-rails') ? include_rails(args, repo_name, git_url) : `git clone "#{git_url}"`
       add_html(repo_name, git_url) if args.include?('-html')
@@ -44,6 +43,11 @@ module Ghrepo
       eos
       puts "such moron very dumb"
     end
+  end
+
+  def create_repo(credentials, repo_name)
+    response = `curl -u "#{credentials[:username]}:#{credentials[:password]}" https://api.github.com/user/repos -d '{"name":"'#{repo_name}'"}'`
+    git_url = JSON.parse(response)[credentials[:url]]
   end
 
   def prompt_password
@@ -111,5 +115,9 @@ module Ghrepo
   def add_collaborator(collab, credentials, repo_name)
     `curl -i -u "#{credentials[:username]}:#{credentials[:password]}" -X PUT -d '' https://api.github.com/repos/"#{credentials[:username]}"/"#{repo_name}"/collaborators/"#{collab}"`
     puts "succesfully added collaborator ", collab
+  end
+
+  def make_search(repo_name)
+    
   end
 end
