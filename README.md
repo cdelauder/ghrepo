@@ -66,6 +66,12 @@ Add collaborators. If adding more than more than one collaborator, separate each
 $ ghrepo -c COLLAB_USERNAME COLLAB_USERNAME2 THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
 ```
 
+Search for a repository. You will receive a list of repositories and will be able to select one to clone.
+
+```
+$ ghrepo -s THE_NAME_OF_THE_REPO_YOU_ARE_SEARCHING_FOR
+```
+
 ## Contributing
 
 1. Fork it

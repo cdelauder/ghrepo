@@ -133,7 +133,7 @@ module Ghrepo
   end
 
   def select_repo(credentials, repositories)
-    puts "type the number of the repository you would like to clone or hit enter to cancel"
+    puts "type the number of the repository you would like to clone or press enter to cancel"
     print "repository number > "
     selection = STDIN.gets.to_i
     valid_selection?(selection, repositories) ? clone_repo(credentials, selection, repositories) : (puts "That was an invalid selection")
