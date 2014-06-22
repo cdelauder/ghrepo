@@ -12,7 +12,7 @@ module Ghrepo
     if args.any?
       repo_name = args.pop
       credentials = set_credentials(args)
-      args.include?('-s') ? make_search(credentials, repo_name) : create_repo(credentials, repo_name)
+      args.include?('-s') ? make_search(credentials, repo_name) : git_url = create_repo(credentials, repo_name)
 
       args.include?('-rails') ? include_rails(args, repo_name, git_url) : `git clone "#{git_url}"`
       add_html(repo_name, git_url) if args.include?('-html')
@@ -132,11 +132,11 @@ module Ghrepo
     select_repo(credentials, repositories)
   end
 
-  def select_repo(repositories)
+  def select_repo(credentials, repositories)
     puts "type the number of the repository you would like to clone or hit enter to cancel"
     print "repository number > "
-    selection = gets.chomp
-    valid_Selection?(selection, repositories) ? clone_repo(credentials, selection, repositories) : puts "That was an invalid selection"
+    selection = STDIN.gets.to_i
+    valid_selection?(selection, repositories) ? clone_repo(credentials, selection, repositories) : (puts "That was an invalid selection")
   end
 
   def valid_selection?(selection, repositories)
@@ -144,7 +144,8 @@ module Ghrepo
   end
 
   def clone_repo(credentials, selection, repositories)
-    git_url = repositories["#{selection}"][credentials[:url]]
+    index = selection - 1
+    git_url = repositories[index][credentials[:url]]
     `git clone "#{git_url}"`
   end
 end
