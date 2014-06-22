@@ -12,7 +12,7 @@ module Ghrepo
     if args.any?
       repo_name = args.pop
       credentials = set_credentials(args)
-      args.include?('-s') ? make_search(repo_name) : create_repo(credentials, repo_name)
+      args.include?('-s') ? make_search(credentials, repo_name) : create_repo(credentials, repo_name)
 
       args.include?('-rails') ? include_rails(args, repo_name, git_url) : `git clone "#{git_url}"`
       add_html(repo_name, git_url) if args.include?('-html')
@@ -117,7 +117,34 @@ module Ghrepo
     puts "succesfully added collaborator ", collab
   end
 
-  def make_search(repo_name)
-    
+  def make_search(credentials, repo_name)
+    response = `curl -u "#{credentials[:username]}:#{credentials[:password]}" https://api.github.com/search/repositories?q="#{repo_name}"&per_page=5`
+    display_search_results(credentials, parse_search(response))
+  end
+
+  def parse_search(response)
+    repositories = JSON.parse(response)['items']
+  end
+
+  def display_search_results(credentials, repositories)
+    repo_number = 1
+    repositories.each {|repo| puts "#{repo_number} #{repo['full_name']}"; repo_number += 1}
+    select_repo(credentials, repositories)
+  end
+
+  def select_repo(repositories)
+    puts "type the number of the repository you would like to clone or hit enter to cancel"
+    print "repository number > "
+    selection = gets.chomp
+    valid_Selection?(selection, repositories) ? clone_repo(credentials, selection, repositories) : puts "That was an invalid selection"
+  end
+
+  def valid_selection?(selection, repositories)
+    (1..repositories.length).include?(selection)
+  end
+
+  def clone_repo(credentials, selection, repositories)
+    git_url = repositories["#{selection}"][credentials[:url]]
+    `git clone "#{git_url}"`
   end
 end
