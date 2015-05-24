@@ -1,6 +1,4 @@
-# ghrepo
-
-This is a Ruby gem that you can use to create GitHub repos from the command line. It currently supports creating an empty repo, a repo with a boilerplate HTML5 file or a repo with a boilerplate Rails application. You can also add collaborators when creating the repo.
+# Ghrepo
 
 If you don't want to have to enter your GitHub username and password (or API token) everytime you create a GitHub repo with this gem, set the following environment variables on your system.
 
@@ -16,7 +14,7 @@ GHREPO_SSH=true
 ```
 
 You can create a personal GitHub API token here:
-<img src="http://monosnap.com/image/5k6tgEW16fB9cajNn43q6s3Q8gJnZM.png">
+<img src="https://d2oawfjgoy88bd.cloudfront.net/5393b246c38aa547534fcae3/5393b246c38aa547534fcae5/5393b24ac38aa54754e9b138.png?Expires=1402277210&Signature=GpJuRQJMfxRpGohuxHZnKd9H1DcmBskpLshyJsMF4y2RQc89-YcRWY-gYtT6yFzG7lD2483YKlGk6H5mjljG0kEp-eAvVndMPSkdX9wK~VRJMWgoC9Y3RobP9nOruCaRR4O6wKngFjetKrTcHvCL6CyE9PcSCQIy2ta4Ua0EBaaJ794RcNp0fIxv3XzYqNiPM0Nfo~c7zFn0kPU9BULq56zbSfBI3B1fnIGaIM1iLCDHP6RWWD4ECd3q62PlwhPX42equ5PLD2P~u20gmgujWvw-fUiyj65UZeVf0esaknZmoatZdIhu3B6FkOx6~et9gahYz1s98KfKrbPRfiJplA__&Key-Pair-Id=APKAJHEJJBIZWFB73RSA">
 
 ## Installation
 
@@ -27,43 +25,43 @@ You can create a personal GitHub API token here:
 Create an empty repo on GitHub and clone that directory into the directory that you are currently in
 
 ```
-$ ghrepo THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo soverywow
 ```
 
 Create an empty repo on GitHub and clone that directory using the SSH address
 
 ```
-$ ghrepo -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -ssh soverywow
 ```
 
 Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created
 
 ```
-$ ghrepo -rails THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -rails soverywow
 ```
 
 Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created using SSH
 
 ```
-$ ghrepo -rails -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -rails -ssh soverywow
 ```
 
 Create an empty repo on GitHub, build a boilerplate HTML5 index.html file and push it to the GitHub repository that was just created
 
 ```
-$ ghrepo -html THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -html soverywow
 ```
 
 Create an empty repo on GitHub, build a boilerplate HTML5 index.html and push it to the GitHub repository that was just created using SSH
 
 ```
-$ ghrepo -html -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -html -ssh soverywow
 ```
 
-Add collaborators. If adding more than more than one collaborator, separate each name with a space.
+Add collaborators
 
 ```
-$ ghrepo -c COLLAB_USERNAME COLLAB_USERNAME2 THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -c COLLABORATOR_USERNAME soverywow
 ```
 
 ## Contributing

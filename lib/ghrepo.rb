@@ -9,6 +9,9 @@ module Ghrepo
   extend self
 
   def start(args)
+    check_git ? new_ghrepo(args) : init_ghrepo(args)
+  end
+  def new_ghrepo(args)
     if args.any?
       repo_name = args.pop
       credentials = set_credentials(args)
@@ -18,31 +21,51 @@ module Ghrepo
       args.include?('-rails') ? include_rails(args, repo_name, git_url) : `git clone "#{git_url}"`
       add_html(repo_name, git_url) if args.include?('-html')
       find_collabs(args, credentials, repo_name) if args.include?('-c')
-
     else
-      puts "RTFM dummy!"
-      puts <<-eos
-        ░░░░░░░░░▄░░░░░░░░░░░░░░▄░░░░
-        ░░░░░░░░▌▒█░░░░░░░░░░░▄▀▒▌░░░
-        ░░░░░░░░▌▒▒█░░░░░░░░▄▀▒▒▒▐░░░
-        ░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐░░░
-        ░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐░░░
-        ░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌░░░
-        ░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌░░
-        ░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐░░
-        ░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌░
-        ░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌░
-        ▀▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐░
-        ▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌
-        ▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐░
-        ░▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌░
-        ░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐░░
-        ░░▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌░░
-        ░░░░▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀░░░
-        ░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀░░░░░
-        ░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀▀░░░░░░░░
-      eos
-      puts "such moron very dumb"
+      display_error
+    end
+  end
+
+  def init_ghrepo(args)
+    "This will initialize a new Github Repo for the current project."
+  end
+
+  def display_error
+    puts "RTFM dummy!"
+    puts <<-eos
+      ░░░░░░░░░▄░░░░░░░░░░░░░░▄░░░░
+      ░░░░░░░░▌▒█░░░░░░░░░░░▄▀▒▌░░░
+      ░░░░░░░░▌▒▒█░░░░░░░░▄▀▒▒▒▐░░░
+      ░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐░░░
+      ░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐░░░
+      ░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌░░░
+      ░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌░░
+      ░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐░░
+      ░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌░
+      ░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌░
+      ▀▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐░
+      ▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌
+      ▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐░
+      ░▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌░
+      ░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐░░
+      ░░▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌░░
+      ░░░░▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀░░░
+      ░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀░░░░░
+      ░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀▀░░░░░░░░
+    eos
+    puts "such moron very dumb"
+  end
+
+  def check_git
+    puts "Checking .git ness of this directory."
+    begin
+      git_dir = File.open('.git')
+    rescue
+      puts "No .git found: Continuing"
+      return true
+    else
+      puts "GIT FILE DETECTED:"
+      return false
     end
   end
 
