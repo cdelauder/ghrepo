@@ -11,6 +11,7 @@ module Ghrepo
   def start(args)
     check_git ? new_ghrepo(args) : init_ghrepo(args)
   end
+
   def new_ghrepo(args)
     if args.any?
       repo_name = args.pop
@@ -27,46 +28,23 @@ module Ghrepo
   end
 
   def init_ghrepo(args)
-    "This will initialize a new Github Repo for the current project."
+    puts "This will initialize a new Github Repo for the current project."
+
   end
 
-  def display_error
-    puts "RTFM dummy!"
-    puts <<-eos
-      ░░░░░░░░░▄░░░░░░░░░░░░░░▄░░░░
-      ░░░░░░░░▌▒█░░░░░░░░░░░▄▀▒▌░░░
-      ░░░░░░░░▌▒▒█░░░░░░░░▄▀▒▒▒▐░░░
-      ░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐░░░
-      ░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐░░░
-      ░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌░░░
-      ░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌░░
-      ░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐░░
-      ░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌░
-      ░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌░
-      ▀▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐░
-      ▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌
-      ▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐░
-      ░▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌░
-      ░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐░░
-      ░░▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌░░
-      ░░░░▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀░░░
-      ░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀░░░░░
-      ░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀▀░░░░░░░░
-    eos
-    puts "such moron very dumb"
-  end
 
   def check_git
     puts "Checking .git ness of this directory."
+
     begin
       git_dir = File.open('.git')
     rescue
       puts "No .git found: Continuing"
-      return true
-    else
+      return true    else
       puts "GIT FILE DETECTED:"
       return false
     end
+
   end
 
   def prompt_password
@@ -135,4 +113,31 @@ module Ghrepo
     `curl -i -u "#{credentials[:username]}:#{credentials[:password]}" -X PUT -d '' https://api.github.com/repos/"#{credentials[:username]}"/"#{repo_name}"/collaborators/"#{collab}"`
     puts "succesfully added collaborator ", collab
   end
+
+  def display_error
+    puts "RTFM dummy!"
+    puts <<-eos
+      ░░░░░░░░░▄░░░░░░░░░░░░░░▄░░░░
+      ░░░░░░░░▌▒█░░░░░░░░░░░▄▀▒▌░░░
+      ░░░░░░░░▌▒▒█░░░░░░░░▄▀▒▒▒▐░░░
+      ░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐░░░
+      ░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐░░░
+      ░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌░░░
+      ░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌░░
+      ░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐░░
+      ░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌░
+      ░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌░
+      ▀▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐░
+      ▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌
+      ▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐░
+      ░▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌░
+      ░▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐░░
+      ░░▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌░░
+      ░░░░▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀░░░
+      ░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀░░░░░
+      ░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀▀░░░░░░░░
+    eos
+    puts "such moron very dumb"
+  end
+
 end
