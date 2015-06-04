@@ -34,6 +34,16 @@ Create an empty repo on GitHub and clone that directory using the SSH address
 $ ghrepo -ssh soverywow
 ```
 
+Create a new repo within an existing project and push it to GitHub.
+This functionality exists only if your current directory contains one or more of the following:
+* *.html
+* *.ru
+* app
+* Gemfile
+```
+$ ghrepo soverywow
+```
+
 Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created
 
 ```
