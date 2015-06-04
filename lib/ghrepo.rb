@@ -10,19 +10,18 @@ module Ghrepo
 
   def start(args)
 
-=begin
-  check if the dir is a git dir
-  check if the dir is empty
-  if dir empty hit new_ghrepo
-  if dir not empty hit init_ghrepo
-=end
-    check_git
+    ################################
+    # Light upgrade PSEUDO
+    ################################
+    # check if the dir is a git dir
+    # check if the dir is empty
+    # if dir empty hit new_ghrepo
+    # if dir !empty hit init_ghrepo
+    ################################
 
+    check_git
     check_existing_dir ? new_ghrepo(args) : init_ghrepo(args)
 
-
-    # new_ghrepo(args)
-    # init_ghrepo(args)
   end
 
   def new_ghrepo(args)
@@ -42,12 +41,49 @@ module Ghrepo
 
   def init_ghrepo(args)
     puts "This will initialize a new Github Repo for the current project."
+    if args.any?
+
+      repo_name = args.pop
+      `git config --global credential.helper 'cache --timeout=3600'`
+      credentials = set_credentials(args)
+      response = `curl -u "#{credentials[:username]}:#{credentials[:password]}" https://api.github.com/user/repos -d '{"name":"'#{repo_name}'"}'`
+      git_url = JSON.parse(response)[credentials[:url]]
+
+      spec = Gem::Specification.find_by_name("ghrepo")
+      gem_root = spec.gem_dir
+      gem_lib = gem_root + "/lib"
+      gitignore_file = gem_lib+"/.gitignore_boilerplate"
+
+      # p '*' * 90
+      # p "gitURL #{git_url}"
+      # p "creds #{credentials}"
+      # p "repo_name #{repo_name}"
+      # p '*' * 90
+
+      `git init`
+      `cp #{gitignore_file} ./.gitignore`
+      `git remote add origin #{git_url}`
+      `git add .`
+      `git commit -m "initial commit application #{repo_name}"`
+
+      puts "#" * 50
+      puts "You may / may not be asked to re-authenticate."
+      puts "#" * 50
+
+      `git push -u origin master`
+
+      puts "Repo created and pushed."
+      puts "A heavy .gitignore file has been generated for you prior to push."
+      puts "You are encouraged to edit it for your needs."
+
+    else
+      display_error("Invalid or No Command Line Argument provided:")
+    end
   end
 
   def check_existing_dir
     dirs = Dir.entries('.').select { |word| word.match(/(\Whtml|\Wru|app|Gemfile)/)}
     if dirs.length > 0
-      p dirs
       return false
     else
       return true
@@ -55,7 +91,7 @@ module Ghrepo
   end
 
   def check_git
-    puts "Checking .git ness of this directory."
+    puts "Checking .git status of this directory."
     display_error("Folder already a GIT repository.") if (Dir.entries('.').include? ".git")
   end
 
@@ -87,8 +123,12 @@ module Ghrepo
 
   def add_html(repo_name, git_url)
     app_dir = "./#{repo_name}"
-    latest_ghrepo_gem = (Dir.entries(ENV["GEM_HOME"] + "/gems")).select {|l| l.start_with?('ghrep')}.last
-    html5_file = ENV["GEM_HOME"] += "/gems/" + latest_ghrepo_gem + "/lib/html5-boilerplate.html"
+
+    spec = Gem::Specification.find_by_name("ghrepo")
+    gem_root = spec.gem_dir
+    gem_lib = gem_root + "/lib"
+
+    html5_file = gem_lib+"/lib/html5-boilerplate.html"
     Dir.chdir(app_dir)
     `cp #{html5_file} ./index.html`
     `git add .`
