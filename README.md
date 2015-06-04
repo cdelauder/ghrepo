@@ -1,6 +1,4 @@
-# ghrepo
-
-This is a Ruby gem that you can use to create GitHub repos from the command line. It currently supports creating an empty repo, a repo with a boilerplate HTML5 file or a repo with a boilerplate Rails application. You can also add collaborators when creating the repo.
+# Ghrepo
 
 If you don't want to have to enter your GitHub username and password (or API token) everytime you create a GitHub repo with this gem, set the following environment variables on your system.
 
@@ -27,43 +25,53 @@ You can create a personal GitHub API token here:
 Create an empty repo on GitHub and clone that directory into the directory that you are currently in
 
 ```
-$ ghrepo THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo soverywow
 ```
 
 Create an empty repo on GitHub and clone that directory using the SSH address
 
 ```
-$ ghrepo -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -ssh soverywow
+```
+
+Create a new repo within an existing project and push it to GitHub.
+This functionality exists only if your current directory contains one or more of the following:
+* *.html
+* *.ru
+* app
+* Gemfile
+```
+$ ghrepo soverywow
 ```
 
 Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created
 
 ```
-$ ghrepo -rails THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -rails soverywow
 ```
 
 Create an empty repo on GitHub, build a boilerplate Rails app and push it to the GitHub repository that was just created using SSH
 
 ```
-$ ghrepo -rails -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -rails -ssh soverywow
 ```
 
 Create an empty repo on GitHub, build a boilerplate HTML5 index.html file and push it to the GitHub repository that was just created
 
 ```
-$ ghrepo -html THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -html soverywow
 ```
 
 Create an empty repo on GitHub, build a boilerplate HTML5 index.html and push it to the GitHub repository that was just created using SSH
 
 ```
-$ ghrepo -html -ssh THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -html -ssh soverywow
 ```
 
-Add collaborators. If adding more than more than one collaborator, separate each name with a space.
+Add collaborators
 
 ```
-$ ghrepo -c COLLAB_USERNAME COLLAB_USERNAME2 THE_NAME_OF_THE_REPO_YOU_WANT_TO_CREATE
+$ ghrepo -c COLLABORATOR_USERNAME soverywow
 ```
 
 ## Contributing

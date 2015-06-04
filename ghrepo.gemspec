@@ -6,7 +6,7 @@ require 'ghrepo/version'
 Gem::Specification.new do |spec|
   spec.name          = "ghrepo"
   spec.version       = Ghrepo::VERSION
-  spec.authors       = ["Chris DeLauder", "Sam Samskies", "Kelly Puckett", "Brantley Beaird"]
+  spec.authors       = ["Chris DeLauder", "Sam Samskies", "Kelly Puckett", "Brantley Beaird", "Hunter Chapman"]
   spec.email         = ["cdelauder@gmail.com"]
   spec.description   = %q{Create a GitHub repo from the command line}
   spec.summary       = %q{Create a Github repo from the command line}
