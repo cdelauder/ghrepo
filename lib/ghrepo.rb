@@ -9,7 +9,19 @@ module Ghrepo
   extend self
 
   def start(args)
-    check_git ? new_ghrepo(args) : display_error("Folder already a GIT repository.")
+
+=begin
+  check if the dir is a git dir
+  check if the dir is empty
+  if dir empty hit new_ghrepo
+  if dir not empty hit init_ghrepo
+=end
+    check_git
+
+    check_existing_dir ? new_ghrepo(args) : init_ghrepo(args)
+
+
+    # new_ghrepo(args)
     # init_ghrepo(args)
   end
 
@@ -24,29 +36,27 @@ module Ghrepo
       add_html(repo_name, git_url) if args.include?('-html')
       find_collabs(args, credentials, repo_name) if args.include?('-c')
     else
-      display_error
+      display_error("Invalid or No Command Line Argument provided:")
     end
   end
 
   def init_ghrepo(args)
     puts "This will initialize a new Github Repo for the current project."
-
-
   end
 
+  def check_existing_dir
+    dirs = Dir.entries('.').select { |word| word.match(/(\Whtml|\Wru|app|Gemfile)/)}
+    if dirs.length > 0
+      p dirs
+      return false
+    else
+      return true
+    end
+  end
 
   def check_git
     puts "Checking .git ness of this directory."
-
-    begin
-      git_dir = File.open('.git')
-    rescue
-      puts "No .git found: Continuing"
-      return true    else
-      puts "GIT FILE DETECTED:"
-      return false
-    end
-
+    display_error("Folder already a GIT repository.") if (Dir.entries('.').include? ".git")
   end
 
   def prompt_password
@@ -116,7 +126,7 @@ module Ghrepo
     puts "succesfully added collaborator ", collab
   end
 
-  def display_error(msg)
+  def display_error(msg = "such moron very dumb")
     puts "RTFM dummy!"
     puts <<-eos
       ░░░░░░░░░▄░░░░░░░░░░░░░░▄░░░░
@@ -139,10 +149,10 @@ module Ghrepo
       ░░░░░░▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀░░░░░
       ░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀▀░░░░░░░░
     eos
-    puts "such moron very dumb"
     p "*"*50
     puts msg
     p "*"*50
+    raise msg
   end
 
 end
