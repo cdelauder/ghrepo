@@ -40,7 +40,7 @@ module Ghrepo
   end
 
   def init_ghrepo(args)
-    puts "This will initialize a new Github Repo for the current project."
+    puts "This will initialize a new GitHub Repository for the current project."
     if args.any?
 
       repo_name = args.pop
@@ -54,12 +54,6 @@ module Ghrepo
       gem_lib = gem_root + "/lib"
       gitignore_file = gem_lib+"/.gitignore_boilerplate"
 
-      # p '*' * 90
-      # p "gitURL #{git_url}"
-      # p "creds #{credentials}"
-      # p "repo_name #{repo_name}"
-      # p '*' * 90
-
       `git init`
       `cp #{gitignore_file} ./.gitignore`
       `git remote add origin #{git_url}`
@@ -71,6 +65,8 @@ module Ghrepo
       puts "#" * 50
 
       `git push -u origin master`
+
+      find_collabs(args, credentials, repo_name) if args.include?('-c')
 
       puts "Repo created and pushed."
       puts "A heavy .gitignore file has been generated for you prior to push."
@@ -163,7 +159,7 @@ module Ghrepo
 
   def add_collaborator(collab, credentials, repo_name)
     `curl -i -u "#{credentials[:username]}:#{credentials[:password]}" -X PUT -d '' https://api.github.com/repos/"#{credentials[:username]}"/"#{repo_name}"/collaborators/"#{collab}"`
-    puts "succesfully added collaborator ", collab
+    puts "Successfully added collaborator ", collab
   end
 
   def display_error(msg = "such moron very dumb")
