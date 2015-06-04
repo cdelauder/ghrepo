@@ -9,7 +9,8 @@ module Ghrepo
   extend self
 
   def start(args)
-    check_git ? new_ghrepo(args) : init_ghrepo(args)
+    check_git ? new_ghrepo(args) : display_error("Folder already a GIT repository.")
+    # init_ghrepo(args)
   end
 
   def new_ghrepo(args)
@@ -29,6 +30,7 @@ module Ghrepo
 
   def init_ghrepo(args)
     puts "This will initialize a new Github Repo for the current project."
+
 
   end
 
@@ -114,7 +116,7 @@ module Ghrepo
     puts "succesfully added collaborator ", collab
   end
 
-  def display_error
+  def display_error(msg)
     puts "RTFM dummy!"
     puts <<-eos
       ░░░░░░░░░▄░░░░░░░░░░░░░░▄░░░░
@@ -138,6 +140,9 @@ module Ghrepo
       ░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▀▀░░░░░░░░
     eos
     puts "such moron very dumb"
+    p "*"*50
+    puts msg
+    p "*"*50
   end
 
 end
