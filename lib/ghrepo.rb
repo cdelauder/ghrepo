@@ -85,6 +85,7 @@ module Ghrepo
 
   def include_rails(args, repo_name, git_url)
     add_rails(repo_name, git_url)
+    replace_rails_gitignore
     push_rails
   end
 
@@ -94,6 +95,12 @@ module Ghrepo
     Dir.chdir(repo_name)
     `git init`
     `git remote add origin "#{git_url}"`
+  end
+
+  def replace_rails_gitignore
+    latest_ghrepo_gem = (Dir.entries(ENV["GEM_HOME"] + "/gems")).select {|l| l.start_with?('ghrep')}.last
+    gitignore_file = ENV["GEM_HOME"] += "/gems/" + latest_ghrepo_gem + "/lib/Rails.gitignore"
+    `cp #{gitignore_file} .gitignore`
   end
 
   def push_rails
